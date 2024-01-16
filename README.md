@@ -1,1 +1,2 @@
 "# to-do-app" 
+This is the repo for the to do app. Functions are used to demomstrate the whole process. The confusion lies in the mark a task done section. Also json is used for the information interchange. The ouput is expected to add task from the user, mark the task done and exit in no use. 
