@@ -4,7 +4,7 @@ def add_task(task):
     try:
         with open("jsondata.json", "r") as jsonf:
             tasks = json.load(jsonf)
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
+    except (FileNotFoundError):
         tasks = []
 
     tasks.append(task)
@@ -13,13 +13,12 @@ def add_task(task):
         json.dump(tasks, jsonf)
 
     print("Task Added")
-
 def read_the_task():
     try:
         with open("jsondata.json", "r") as jsonf:
             loaded_file = json.load(jsonf)
         return loaded_file
-    except (FileNotFoundError, json.decoder.JSONDecodeError):
+    except (FileNotFoundError):
         print("File not found. No tasks available.")
         return []
 
@@ -34,8 +33,10 @@ def mark_a_task_done():
         print(f"{i + 1}. {'[Done]' if task.get('done', False) else '[Not Done]'} {task.get('task', 'Unknown')}")
 
     try:
-        task_index = int(input("Enter the task number to mark as done: ")) - 1
-        tasks[task_index]['done'] = True
+        task_index = int(input("Enter the task number to mark as done or enter e to exit: "))
+        if task_index=='e':
+            return
+        tasks[task_index-1]['done'] = True
 
         with open("jsondata.json", "w") as jsonf:
             json.dump(tasks, jsonf)
@@ -54,8 +55,10 @@ if __name__ == "__main__":
         if user_choice == "1":
             task_text = input("Please enter what you want to add to your list: ")
             add_task({"task": task_text, "done": False})
+            
         elif user_choice == "2":
             mark_a_task_done()
         elif user_choice == "3":
-            print("Exiting the app.")
             break
+        else: 
+            print("invalid choice")
